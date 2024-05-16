@@ -47,6 +47,7 @@ register_cpp_sample(NAME sample_capture_and_save_cpp SRC src/sample_capture_and_
 register_cpp_sample(NAME sample_capture_2d_cpp SRC src/sample_capture_2d.cpp)
 register_cpp_sample(NAME sample_capture_assistant_cpp SRC src/sample_capture_assistant.cpp)
 register_cpp_sample(NAME sample_capture_with_settings_from_yml_cpp SRC src/sample_capture_with_settings_from_yml.cpp)
+register_cpp_sample(NAME rdv_capture_with_settings_from_yml_cpp SRC src/rdv_capture_with_settings_from_yml.cpp)
 
 ####################
 ## Python Samples ##
@@ -79,4 +80,9 @@ register_python_sample(SRC scripts/sample_capture_with_settings_from_yml.py)
 install(
   DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+)
+
+install(
+    DIRECTORY settings/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/settings
 )
