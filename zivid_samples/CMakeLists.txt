@@ -3,15 +3,15 @@ project(zivid_samples)
 set(CMAKE_CXX_STANDARD 11)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  zivid_camera
-  dynamic_reconfigure
+    roscpp
+    rospy
+    std_msgs
+    zivid_camera
+    dynamic_reconfigure
 )
 
 catkin_package(
-  CATKIN_DEPENDS zivid_camera
+    CATKIN_DEPENDS zivid_camera
 )
 
 #################
@@ -20,25 +20,25 @@ catkin_package(
 
 function(register_cpp_sample)
   cmake_parse_arguments(
-    ARG
-    ""
-    "NAME;SRC"
-    ""
-    ${ARGN}
+      ARG
+      ""
+      "NAME;SRC"
+      ""
+      ${ARGN}
   )
   add_executable(${ARG_NAME} ${ARG_SRC})
   add_dependencies(${ARG_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
   target_include_directories(${ARG_NAME}
-    SYSTEM PRIVATE
-    ${catkin_INCLUDE_DIRS}
+      SYSTEM PRIVATE
+      ${catkin_INCLUDE_DIRS}
   )
   target_link_libraries(${ARG_NAME}
-    ${catkin_LIBRARIES}
+      ${catkin_LIBRARIES}
   )
   install(TARGETS ${ARG_NAME}
-    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+      ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+      LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+      RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
 endfunction()
 
@@ -55,15 +55,15 @@ register_cpp_sample(NAME rdv_capture_with_settings_from_yml_cpp SRC src/rdv_capt
 
 function(register_python_sample)
   cmake_parse_arguments(
-    ARG
-    ""
-    "SRC"
-    ""
-    ${ARGN}
-    )
+      ARG
+      ""
+      "SRC"
+      ""
+      ${ARGN}
+  )
   install(PROGRAMS
-    ${ARG_SRC}
-    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+      ${ARG_SRC}
+      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
 endfunction()
 
@@ -78,8 +78,8 @@ register_python_sample(SRC scripts/sample_capture_with_settings_from_yml.py)
 ####################
 
 install(
-  DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+    DIRECTORY launch/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
 install(

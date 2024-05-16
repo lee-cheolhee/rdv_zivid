@@ -9,24 +9,24 @@
 
 namespace zivid_camera
 {
-void ZividNodelet::onInit()
-{
-  try
-  {
-    // Important: use non-multi-threaded callback queues (getNodeHandle and getPrivateNodeHandle).
-    camera = std::make_unique<ZividCamera>(getNodeHandle(), getPrivateNodeHandle());
-  }
-  catch (const std::exception& e)
-  {
-    NODELET_ERROR_STREAM("Failed to initialize camera driver. Exception: \"" << e.what() << "\"");
-    throw;
-  }
-  catch (...)
-  {
-    NODELET_ERROR_STREAM("Failed to initialize camera driver (unknown exception)");
-    throw;
-  }
-}
+    void ZividNodelet::onInit()
+    {
+        try
+        {
+            // Important: use non-multi-threaded callback queues (getNodeHandle and getPrivateNodeHandle).
+            camera = std::make_unique<ZividCamera>(getNodeHandle(), getPrivateNodeHandle());
+        }
+        catch (const std::exception& e)
+        {
+            NODELET_ERROR_STREAM("Failed to initialize camera driver. Exception: \"" << e.what() << "\"");
+            throw;
+        }
+        catch (...)
+        {
+            NODELET_ERROR_STREAM("Failed to initialize camera driver (unknown exception)");
+            throw;
+        }
+    }
 }  // namespace zivid_camera
 
 #ifdef __clang__

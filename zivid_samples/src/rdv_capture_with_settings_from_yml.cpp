@@ -21,46 +21,46 @@
 
 namespace
 {
-const ros::Duration default_wait_duration{ 30 };
-
-void capture()
-{
-  ROS_INFO("Calling capture service");
-  zivid_camera::Capture capture;
-  CHECK(ros::service::call("/zivid_camera/capture", capture));
-}
-
+    const ros::Duration default_wait_duration{ 30 };
+    
+    void capture()
+    {
+        ROS_INFO("Calling capture service");
+        zivid_camera::Capture capture;
+        CHECK(ros::service::call("/zivid_camera/capture", capture));
+    }
+    
 }  // namespace
 
 void plcCallback(const std_msgs::String::ConstPtr& msg)
 {
-	// TODO: plc ∏ﬁºº¡ˆø° µ˚∂Ûº≠ ∫Ø∞Ê « ø‰
-	ROS_INFO("Calling capture");
-	capture();
+    // TODO: plc ÏûÖÎ†•Ïóê Îî∞Îùº capture Ìò∏Ï∂úÌïòÎèÑÎ°ù Í∏∞Îä• Ï∂îÍ∞Ä
+    ROS_INFO("Calling capture");
+    capture();
 }
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "rdv_capture_with_settings_from_yml_cpp");
-  ros::NodeHandle nh;
-
-  ROS_INFO("Starting rdv_capture_with_settings_from_yml.cpp");
-
-  CHECK(ros::service::waitForService("/zivid_camera/capture", default_wait_duration));
-
-  ros::AsyncSpinner spinner(1);
-  spinner.start();
-
-  std::string samples_path = ros::package::getPath("zivid_samples");
-  std::string settings_path = samples_path + "/settings/camera_settings.yml";
-  ROS_INFO("Loading settings from: %s", settings_path.c_str());
-  zivid_camera::LoadSettingsFromFile load_settings_from_file;
-  load_settings_from_file.request.file_path = settings_path;
-  CHECK(ros::service::call("/zivid_camera/load_settings_from_file", load_settings_from_file));
-
-  ros::Subscriber plc_sub = nh.subscribe("/rdv_pcl/signal", 1, plcCallback);
-
-  ros::waitForShutdown();
-
-  return 0;
+    ros::init(argc, argv, "rdv_capture_with_settings_from_yml_cpp");
+    ros::NodeHandle nh;
+    
+    ROS_INFO("Starting rdv_capture_with_settings_from_yml.cpp");
+    
+    CHECK(ros::service::waitForService("/zivid_camera/capture", default_wait_duration));
+    
+    ros::AsyncSpinner spinner(1);
+    spinner.start();
+    
+    std::string samples_path = ros::package::getPath("zivid_samples");
+    std::string settings_path = samples_path + "/settings/camera_settings.yml";
+    ROS_INFO("Loading settings from: %s", settings_path.c_str());
+    zivid_camera::LoadSettingsFromFile load_settings_from_file;
+    load_settings_from_file.request.file_path = settings_path;
+    CHECK(ros::service::call("/zivid_camera/load_settings_from_file", load_settings_from_file));
+    
+    ros::Subscriber plc_sub = nh.subscribe("/rdv_pcl/signal", 1, plcCallback);
+    
+    ros::waitForShutdown();
+    
+    return 0;
 }
