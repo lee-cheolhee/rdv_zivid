@@ -8,7 +8,13 @@ find_package(catkin REQUIRED COMPONENTS
     std_msgs
     zivid_camera
     dynamic_reconfigure
+    sensor_msgs
+    cv_bridge
+    image_transport
+    message_runtime
+    message_generation
 )
+find_package(Boost REQUIRED)
 
 catkin_package(
     CATKIN_DEPENDS zivid_camera
@@ -31,9 +37,11 @@ function(register_cpp_sample)
   target_include_directories(${ARG_NAME}
       SYSTEM PRIVATE
       ${catkin_INCLUDE_DIRS}
+      ${Boost_INCLUDE_DIRS}
   )
   target_link_libraries(${ARG_NAME}
       ${catkin_LIBRARIES}
+      ${Boost_LIBRARIES}
   )
   install(TARGETS ${ARG_NAME}
       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
