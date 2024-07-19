@@ -4,13 +4,23 @@ __version__:
 Settings:
   Acquisitions:
     - Acquisition:
-        Aperture: 2.59
-        Brightness: 1.5
-        ExposureTime: 15000
+        Aperture: 15
+        Brightness: 1.8
+        ExposureTime: 8333
+        Gain: 1
+    - Acquisition:
+        Aperture: 3.65
+        Brightness: 1.8
+        ExposureTime: 8333
+        Gain: 1
+    - Acquisition:
+        Aperture: 1.99
+        Brightness: 1.8
+        ExposureTime: 16667
         Gain: 1
   Diagnostics:
     Enabled: no
-  Engine: omni
+  Engine: stripe
   Processing:
     Color:
       Balance:
@@ -24,16 +34,16 @@ Settings:
       Cluster:
         Removal:
           Enabled: yes
-          MaxNeighborDistance: 3.5
+          MaxNeighborDistance: 5
           MinArea: 200
       Experimental:
         ContrastDistortion:
           Correction:
-            Enabled: no
-            Strength: 0.25
-          Removal:
             Enabled: yes
-            Threshold: 0.4
+            Strength: 0.3
+          Removal:
+            Enabled: no
+            Threshold: 0.3
       Hole:
         Repair:
           Enabled: yes
@@ -42,9 +52,9 @@ Settings:
       Noise:
         Removal:
           Enabled: yes
-          Threshold: 2
+          Threshold: 3
         Repair:
-          Enabled: yes
+          Enabled: no
         Suppression:
           Enabled: no
       Outlier:
@@ -58,19 +68,19 @@ Settings:
       Smoothing:
         Gaussian:
           Enabled: yes
-          Sigma: 1.5
+          Sigma: 1.75
     Resampling:
       Mode: disabled
   RegionOfInterest:
     Box:
       Enabled: no
       Extents: [-10, 100]
-      PointA: [104.929031, 65.5999985, 550]
-      PointB: [-35, -8.78628349, 600]
-      PointO: [-35, 65.597908, 550]
+      PointA: [0, 0, 0]
+      PointB: [0, 0, 0]
+      PointO: [0, 0, 0]
     Depth:
-      Enabled: yes
-      Range: [200, 500]
+      Enabled: no
+      Range: [300, 1300]
   Sampling:
     Color: rgb
-    Pixel: blueSubsample2x2
+    Pixel: all

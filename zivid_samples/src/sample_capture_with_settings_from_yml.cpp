@@ -7,6 +7,13 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <ros/ros.h>
 #include <ros/package.h>
+#include <rosbag/bag.h>
+
+//rosbag::Bag bag;
+//
+//void callback(const boost::shared_ptr<const sensor_msgs::PointCloud2>& msg){
+//    bag.write("/zivid_camera/points/xyzrgba", ros::Time::now(), *msg);
+//}
 
 #define CHECK(cmd)                                                                                                     \
   do                                                                                                                   \
@@ -23,9 +30,12 @@ namespace
     
     void capture()
     {
+//        bag.open("/home/chlee/plant_factory/test.bag", rosbag::bagmode::Write);
         ROS_INFO("Calling capture service");
         zivid_camera::Capture capture;
         CHECK(ros::service::call("/zivid_camera/capture", capture));
+
+//        bag.close();
     }
     
 }  // namespace
@@ -34,7 +44,7 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "sample_capture_with_settings_from_yml_cpp");
     ros::NodeHandle n;
-    
+
     ROS_INFO("Starting sample_capture_with_settings_from_yml.cpp");
     
     CHECK(ros::service::waitForService("/zivid_camera/capture", default_wait_duration));
@@ -52,7 +62,8 @@ int main(int argc, char** argv)
     ROS_INFO("Calling capture");
     
     capture();
-    
+//    ros::Subscriber sub = n.subscribe("/zivid_camera/points/xyzrgba", 1, callback);
+
     ros::waitForShutdown();
     
     return 0;

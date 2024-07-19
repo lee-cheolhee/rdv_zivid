@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
     image_transport
     message_runtime
     message_generation
+    rosbag_storage
 )
 find_package(Boost REQUIRED)
 

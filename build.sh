@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_NAME="ms"
+PROJECT_NAME="ms/vision"
 #remote_url=$(git config --get remote.origin.url)
 #REPO_NAME=$(basename $remote_url .git)
 #
@@ -17,4 +17,4 @@ src_dir=$(pwd)
 workspace=$src_dir/..
 
 cd $workspace || true
-docker build -t rdv-warehouse.iptime.org:7500/$PROJECT_NAME/$REPO_NAME:$TAG -f $src_dir/Dockerfile .
+docker build -t $PROJECT_NAME/$REPO_NAME:$TAG -f $src_dir/Dockerfile .

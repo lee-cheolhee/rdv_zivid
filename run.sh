@@ -6,14 +6,14 @@
 #
 #git_branch=$(git rev-parse --abbrev-ref HEAD)
 #TAG=$(echo "$git_branch" | sed 's/[^a-zA-Z0-9\-_]//g')
-PROJECT_NAME="ms"
+PROJECT_NAME="ms/vision"
 REPO_NAME="rdv_zivid"
 TAG="develop"
 
-IP_ADDR=192.168.4.7
+IP_ADDR=100.100.100.2
 HOSTNAME=$(hostname)
 USER=$(id -un)
-DISPLAY=:9
+DISPLAY=:0
 
 ENVS="--env=XAUTHORITY=/home/$USER/.Xauthority
       --env=DISPLAY=$DISPLAY
@@ -26,7 +26,7 @@ ENVS="--env=XAUTHORITY=/home/$USER/.Xauthority
 XSOCK=/tmp/.X11-unix
 XAUTH=$HOME/.Xauthority
 VOLUMES="--volume=$XSOCK:$XSOCK
-         --volume=$XAUTH:/home/$(id -un)/.Xauthority"
+         --volume=$XAUTH:/home/$USER/.Xauthority"
 
 LOCAL_INC='/usr/local/include'
 LOCAL_LIB='/usr/local/lib'
@@ -36,6 +36,7 @@ MOUNTS="--mount type=bind,readonly,source=$LOCAL_INC,target=/usr/local/include
 
 xhost +local:docker
 
+#--gpus all \
 docker run \
 -d \
 --restart always \
@@ -48,4 +49,4 @@ $MOUNTS \
 --name=$REPO_NAME \
 --workdir /root \
 --gpus '"device=0"' \
-rdv-warehouse.iptime.org:7500/$PROJECT_NAME/$REPO_NAME:$TAG /bin/bash
+$PROJECT_NAME/$REPO_NAME:$TAG

@@ -4,13 +4,13 @@ __version__:
 Settings:
   Acquisitions:
     - Acquisition:
-        Aperture: 2.59
-        Brightness: 1.5
-        ExposureTime: 15000
+        Aperture: 2.18
+        Brightness: 1.8
+        ExposureTime: 10000
         Gain: 1
   Diagnostics:
     Enabled: no
-  Engine: omni
+  Engine: phase
   Processing:
     Color:
       Balance:
@@ -24,33 +24,33 @@ Settings:
       Cluster:
         Removal:
           Enabled: yes
-          MaxNeighborDistance: 3.5
-          MinArea: 200
+          MaxNeighborDistance: 7
+          MinArea: 500
       Experimental:
         ContrastDistortion:
           Correction:
-            Enabled: no
-            Strength: 0.25
-          Removal:
             Enabled: yes
-            Threshold: 0.4
+            Strength: 0.3
+          Removal:
+            Enabled: no
+            Threshold: 0.3
       Hole:
         Repair:
           Enabled: yes
-          HoleSize: 0.1
-          Strictness: 4
+          HoleSize: 0.2
+          Strictness: 2
       Noise:
         Removal:
           Enabled: yes
-          Threshold: 2
+          Threshold: 3
         Repair:
-          Enabled: yes
+          Enabled: no
         Suppression:
           Enabled: no
       Outlier:
         Removal:
           Enabled: yes
-          Threshold: 10
+          Threshold: 20
       Reflection:
         Removal:
           Enabled: yes
@@ -58,19 +58,19 @@ Settings:
       Smoothing:
         Gaussian:
           Enabled: yes
-          Sigma: 1.5
+          Sigma: 4
     Resampling:
       Mode: disabled
   RegionOfInterest:
     Box:
       Enabled: no
       Extents: [-10, 100]
-      PointA: [104.929031, 65.5999985, 550]
-      PointB: [-35, -8.78628349, 600]
-      PointO: [-35, 65.597908, 550]
+      PointA: [-212.332596, -563.567993, 2241.32178]
+      PointB: [348.238586, 263.852478, 2466.79614]
+      PointO: [-275.502777, 185.770706, 2022.72498]
     Depth:
       Enabled: yes
-      Range: [200, 500]
+      Range: [500, 1300]
   Sampling:
     Color: rgb
-    Pixel: blueSubsample2x2
+    Pixel: all

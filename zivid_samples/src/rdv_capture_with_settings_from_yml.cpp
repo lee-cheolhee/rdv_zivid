@@ -34,68 +34,59 @@ bool pub_flag = false;
     }                                                                                                                  \
   } while (false)
 
-namespace
-{
-    const ros::Duration default_wait_duration{ 30 };
-    
-    void capture()
-    {
-        ROS_INFO("Calling capture service");
-        zivid_camera::Capture capture;
-        CHECK(ros::service::call("/zivid_camera/capture", capture));
-    }
-    
+namespace {
+const ros::Duration default_wait_duration{30};
+
+void capture() {
+    ROS_INFO("Calling capture service");
+    zivid_camera::Capture capture;
+    CHECK(ros::service::call("/zivid_camera/capture", capture));
+}
+
 }  // namespace
 
-void plcCallback(const std_msgs::String::ConstPtr& msg)
-{
-    if (msg->data == "robot_start")
-    {
-        ROS_INFO("Calling capture");
+void plcCallback(const std_msgs::String::ConstPtr &msg) {
+    ROS_INFO("Recieve msg: '%s' | pub flag: %s", msg->data.c_str(), pub_flag ? "true" : "false");
+    if (msg->data == "robot_start") {
         capture();
         pub_flag = true;
-    }
-    else
+    } else
         pub_flag = false;
 }
 
 void dataCallback(
-    const boost::shared_ptr<const sensor_msgs::Image>& in_img_msg,
-    const boost::shared_ptr<const sensor_msgs::PointCloud2>& in_pc2_msg
-)
-{
+    const boost::shared_ptr<const sensor_msgs::Image> &in_img_msg,
+    const boost::shared_ptr<const sensor_msgs::PointCloud2> &in_pc2_msg
+) {
     ROS_INFO("Callback message filter");
 
-    if (pub_flag)
-    {
+    if (pub_flag) {
         img_pub.publish(in_img_msg);
         pc_pub.publish(in_pc2_msg);
 
         ROS_INFO("Image / PCD Publish!!!");
-    }
-    else
+    } else
         ROS_INFO("Stop pub");
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
     ros::init(argc, argv, "rdv_capture_with_settings_from_yml_cpp");
     ros::NodeHandle nh;
 
     ROS_INFO("Starting rdv_capture_with_settings_from_yml.cpp");
-    
+
     CHECK(ros::service::waitForService("/zivid_camera/capture", default_wait_duration));
-    
+
     ros::AsyncSpinner spinner(1);
     spinner.start();
-    
+
     std::string samples_path = ros::package::getPath("zivid_samples");
     std::string settings_path = samples_path + "/settings/camera_settings.yml";
     ROS_INFO("Loading settings from: %s", settings_path.c_str());
     zivid_camera::LoadSettingsFromFile load_settings_from_file;
     load_settings_from_file.request.file_path = settings_path;
     CHECK(ros::service::call("/zivid_camera/load_settings_from_file", load_settings_from_file));
-    
+
     ros::Subscriber plc_sub = nh.subscribe("/rdv_plc/request", 1, plcCallback);
 
     img_pub = nh.advertise<sensor_msgs::Image>("/zivid_camera/color/image_color", 1);
@@ -109,6 +100,6 @@ int main(int argc, char** argv)
     sync.registerCallback(boost::bind(&dataCallback, _1, _2));
 
     ros::waitForShutdown();
-    
+
     return 0;
 }

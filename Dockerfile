@@ -19,8 +19,8 @@ RUN apt-get update && apt-get install --assume-yes \
 RUN mkdir -p /etc/OpenCL/vendors && \
     echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
 
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
 RUN wget --quiet \
     https://downloads.zivid.com/sdk/releases/2.12.0+6afd4961-1/u20/amd64/zivid_2.12.0+6afd4961-1_amd64.deb \
