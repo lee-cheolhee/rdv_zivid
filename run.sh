@@ -8,12 +8,12 @@
 #TAG=$(echo "$git_branch" | sed 's/[^a-zA-Z0-9\-_]//g')
 PROJECT_NAME="ms/vision"
 REPO_NAME="rdv_zivid"
-TAG="develop"
+TAG="v1.0.0"
 
-IP_ADDR=100.100.100.2
+IP_ADDR=localhost
 HOSTNAME=$(hostname)
 USER=$(id -un)
-DISPLAY=:0
+DISPLAY=:9
 
 ENVS="--env=XAUTHORITY=/home/$USER/.Xauthority
       --env=DISPLAY=$DISPLAY

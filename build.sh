@@ -10,8 +10,8 @@ PROJECT_NAME="ms/vision"
 ## sanitize the branch name to be used as docker tag
 #TAG=$(echo "$git_branch" | sed 's/[^a-zA-Z0-9\-_]//g')
 
-REPO_NAME=rdv_zivid
-TAG=develop
+REPO_NAME="rdv_zivid"
+TAG="v1.0.0"
 
 src_dir=$(pwd)
 workspace=$src_dir/..

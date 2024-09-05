@@ -8,6 +8,7 @@
 #include <ros/ros.h>
 #include <ros/package.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Bool.h>
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
@@ -45,9 +46,9 @@ void capture() {
 
 }  // namespace
 
-void plcCallback(const std_msgs::String::ConstPtr &msg) {
-    ROS_INFO("Recieve msg: '%s' | pub flag: %s", msg->data.c_str(), pub_flag ? "true" : "false");
-    if (msg->data == "robot_start") {
+void CallbackCaptureSign(const std_msgs::Bool::ConstPtr &msg) {
+    ROS_INFO("Recieve msg: %s | pub flag: %s", msg->data ? "capture" : " - ", pub_flag ? "true" : "false");
+    if (msg->data) {
         capture();
         pub_flag = true;
     } else
@@ -65,6 +66,7 @@ void dataCallback(
         pc_pub.publish(in_pc2_msg);
 
         ROS_INFO("Image / PCD Publish!!!");
+        pub_flag = false;
     } else
         ROS_INFO("Stop pub");
 }
@@ -87,7 +89,7 @@ int main(int argc, char **argv) {
     load_settings_from_file.request.file_path = settings_path;
     CHECK(ros::service::call("/zivid_camera/load_settings_from_file", load_settings_from_file));
 
-    ros::Subscriber plc_sub = nh.subscribe("/rdv_plc/request", 1, plcCallback);
+    ros::Subscriber sub_cap = nh.subscribe<std_msgs::Bool>("/rdv_zivid/capture", 1, CallbackCaptureSign);
 
     img_pub = nh.advertise<sensor_msgs::Image>("/zivid_camera/color/image_color", 1);
     pc_pub = nh.advertise<sensor_msgs::PointCloud2>("/zivid_camera/points/xyzrgba", 1);
